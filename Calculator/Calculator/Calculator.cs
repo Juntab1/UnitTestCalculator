@@ -32,5 +32,15 @@
         }
     }
 
+    public int Power(int x, int y)
+    {
+        return (int) Math.Pow(x, y);
+    }
+
+    public int Modulo(int x, int y)
+    {
+        return (x % y + y) % y;
+    }
+
     // https://stackify.com/unit-testing-basics-best-practices/
 }
