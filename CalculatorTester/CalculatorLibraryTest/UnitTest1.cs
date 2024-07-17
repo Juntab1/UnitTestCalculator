@@ -8,7 +8,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultPositive = calculator.Add(4, 3);
+        int resultPositive = calculator.CommonAdd(4, 3);
 
         Assert.AreEqual(7, resultPositive);
     }
@@ -18,7 +18,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegative = calculator.Add(-4, -3);
+        int resultNegative = calculator.CommonAdd(-4, -3);
 
         Assert.AreEqual(-7, resultNegative);
     }
@@ -28,7 +28,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultPositive = calculator.Subtract(4, 3);
+        int resultPositive = calculator.CommonSubtract(4, 3);
 
         Assert.AreEqual(1, resultPositive);
     }
@@ -38,7 +38,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegative = calculator.Subtract(1, 3);
+        int resultNegative = calculator.CommonSubtract(1, 3);
 
         Assert.AreEqual(-2, resultNegative);
     }
@@ -48,7 +48,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultPositive = calculator.Multiply(4, 3);
+        int resultPositive = calculator.CommonMultiply(4, 3);
 
         Assert.AreEqual(12, resultPositive);
     }
@@ -58,7 +58,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegative = calculator.Multiply(-1, 3);
+        int resultNegative = calculator.CommonMultiply(-1, 3);
 
         Assert.AreEqual(-3, resultNegative);
     }
@@ -68,7 +68,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultDoubleNegative = calculator.Multiply(-1, -3);
+        int resultDoubleNegative = calculator.CommonMultiply(-1, -3);
 
         Assert.AreEqual(3, resultDoubleNegative);
     }
@@ -78,7 +78,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultPositive = calculator.Divide(6, 3);
+        int resultPositive = calculator.CommonDivide(6, 3);
 
         Assert.AreEqual(2, resultPositive);
     }
@@ -88,7 +88,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegative = calculator.Divide(-4, 3);
+        int resultNegative = calculator.CommonDivide(-4, 3);
 
         Assert.AreEqual(-1, resultNegative);
     }
@@ -98,7 +98,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultDoubleNegative = calculator.Divide(-6, -3);
+        int resultDoubleNegative = calculator.CommonDivide(-6, -3);
 
         Assert.AreEqual(2, resultDoubleNegative);
     }
@@ -110,7 +110,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultDoubleNegative = calculator.Divide(-6, 0);
+        int resultDoubleNegative = calculator.CommonDivide(-6, 0);
     }
 
     [TestMethod]
@@ -118,7 +118,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegative = calculator.Power(2, 2);
+        int resultNegative = calculator.CommonPower(2, 2);
 
         Assert.AreEqual(4, resultNegative);
     }
@@ -128,7 +128,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultDoubleNegative = calculator.Power(2, -2);
+        int resultDoubleNegative = calculator.CommonPower(2, -2);
 
         Assert.AreEqual(0, resultDoubleNegative);
     }
@@ -138,7 +138,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultDoubleNegative = calculator.Power(-2, 2);
+        int resultDoubleNegative = calculator.CommonPower(-2, 2);
 
         Assert.AreEqual(4, resultDoubleNegative);
     }
@@ -148,7 +148,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegativeBaseNegativeAnswer = calculator.Power(-2, 3);
+        int resultNegativeBaseNegativeAnswer = calculator.CommonPower(-2, 3);
 
         Assert.AreEqual(-8, resultNegativeBaseNegativeAnswer);
     }
@@ -158,7 +158,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultPositive = calculator.Modulo(3, 3);
+        int resultPositive = calculator.CommonModulo(3, 3);
 
         Assert.AreEqual(0, resultPositive);
     }
@@ -168,7 +168,7 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultNegative = calculator.Modulo(-1, 3);
+        int resultNegative = calculator.CommonModulo(-1, 3);
 
         Assert.AreEqual(2, resultNegative);
     }
@@ -178,13 +178,114 @@ public class UnitTest1
     {
         var calculator = new Calculator();
 
-        int resultZero = calculator.Modulo(3, 3);
+        int resultZero = calculator.CommonModulo(3, 3);
 
         Assert.AreEqual(0, resultZero);
     }
 
     // END OF COMMON CORE STATE STANDARD MATHEMATICS
 
+    // reverse polish Notation
+    [TestMethod]
+    public void TestZeroModuloPolish()
+    {
+        var calculator = new Calculator();
+
+        int resultZero = calculator.PolishNotationOperations(['3', '3', '%']);
+
+        Assert.AreEqual(0, resultZero);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException),
+    "the Stack is empty! Please put in order two numbers and an operation")]
+    public void TestErrorStackEmptyPolish()
+    {
+        var calculator = new Calculator();
+
+        calculator.PolishNotationOperations([]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException),
+    @"Please enter the correct number of numbers for the operation, 
+    two numbers in the array that come before the operation sign")]
+    public void TestErrorNotEnoughNumbersPolish()
+    {
+        var calculator = new Calculator();
+
+        calculator.PolishNotationOperations(['2', '-']);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException),
+    "Please make sure the first two entries in the array are numbers!")]
+    public void TestErrorTooManyOperationsPolish()
+    {
+        var calculator = new Calculator();
+
+        calculator.PolishNotationOperations(['2', '-', '-']);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException),
+    "Can't divide by 0!")]
+    public void TestErrorDivideByZeroPolish()
+    {
+        var calculator = new Calculator();
+
+        calculator.PolishNotationOperations(['0', '2', '/']);
+    }
+
+    [TestMethod]
+    public void TestMultiplyPolish()
+    {
+        var calculator = new Calculator();
+
+        int result = calculator.PolishNotationOperations(['2', '2', '*']);
+
+        Assert.AreEqual(4, result);
+    }
+
+    [TestMethod]
+    public void TestMinusPolish()
+    {
+        var calculator = new Calculator();
+
+        int result = calculator.PolishNotationOperations(['2', '3', '-']);
+
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void TestAddPolish()
+    {
+        var calculator = new Calculator();
+
+        int result = calculator.PolishNotationOperations(['2', '3', '*']);
+
+        Assert.AreEqual(6, result);
+    }
+
+    [TestMethod]
+    public void TestPowerPolish()
+    {
+        var calculator = new Calculator();
+
+        int result = calculator.PolishNotationOperations(['0', '2', '^']);
+
+        Assert.AreEqual(1, result);
+    }
+
+    [TestMethod]
+    public void TestModuloPolish()
+    {
+        var calculator = new Calculator();
+
+        int result = calculator.PolishNotationOperations(['3', '4', '%']);
+
+        Assert.AreEqual(1, result);
+    }
 
 }
 
