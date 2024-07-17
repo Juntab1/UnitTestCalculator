@@ -14,6 +14,18 @@ public class UnitTest1
     }
 
     [TestMethod]
+    public void TestPositiveAddAndMinus()
+    {
+        var calculator = new Calculator();
+
+        int resultPositive = calculator.CommonAdd(4, 3);
+
+        int resultNegative = calculator.CommonSubtract(4, 3);
+
+        Assert.AreEqual(6, resultPositive - resultNegative);
+    }
+
+    [TestMethod]
     public void TestNegativeAdd()
     {
         var calculator = new Calculator();
@@ -50,7 +62,7 @@ public class UnitTest1
 
         int resultPositive = calculator.CommonMultiply(4, 3);
 
-        Assert.AreEqual(12, resultPositive);
+        Assert.AreEqual(24, calculator.CommonMultiply(resultPositive,2));
     }
 
     [TestMethod]
