@@ -58,7 +58,6 @@ public class Calculator
         {
             throw new InvalidOperationException("the Stack is empty! Please put in order two numbers and an operation");
         }
-        char currChar = currStack.Peek();
         if (!Char.IsNumber(currStack.Peek()))
         {
             char currOperation = currStack.Pop();
@@ -77,34 +76,39 @@ public class Calculator
             }
             else
             {
+                // need this to change char into integer
+                firstNumber -= '0';
+                secondNumber -= '0';
                 if (currOperation == '/')
                 {
-
+                    if (secondNumber == 0){
+                        throw new InvalidOperationException("Can't divide by 0!"); 
+                    }
+                    return firstNumber / secondNumber;
                 }
                 else if (currOperation == '*')
                 {
-
+                    return firstNumber * secondNumber;
                 }
                 else if (currOperation == '-')
                 {
-
+                    return firstNumber - secondNumber;
                 }
                 else if (currOperation == '+')
                 {
-                    
+                    return firstNumber + secondNumber;
                 }
                 else if (currOperation == '^')
                 {
-                    
+                    return (int) Math.Pow(firstNumber, secondNumber);
                 }
                 else if (currOperation == '%')
                 {
-
+                    return (firstNumber % secondNumber + secondNumber) % secondNumber;
                 }
             }
-            return -1;
         }
-
+        return -1;
     }
 
     // https://stackify.com/unit-testing-basics-best-practices/
